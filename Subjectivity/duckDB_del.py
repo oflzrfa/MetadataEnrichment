@@ -10,10 +10,8 @@ for table in tables_in_db:
     conn.execute(f"DROP TABLE IF EXISTS {table_name}")
 
 print("All tables have been dropped.")
-# Connect to the DuckDB database
 conn = duckdb.connect('my_database.duckdb')
 
-# Query to drop a specific table
 table_name = 'updated_metadata_2_BW_detection_4'  
 conn.execute(f"DROP TABLE IF EXISTS {table_name}")
 conn.close()
@@ -24,8 +22,6 @@ import duckdb
 def drop_all_tables(database_file='my_database.duckdb'):
     # Connect to the DuckDB database
     conn = duckdb.connect(database_file)
-    
-    # Retrieve all table names from the database
     tables = conn.execute("SHOW TABLES").fetchdf()['name'].tolist()
 
     if not tables:
