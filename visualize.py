@@ -18,27 +18,21 @@ def load_table_data(table_name, database_file='my_database.duckdb', max_rows=500
     conn.close()
     return df
 
-def plot_heatmap(df):
-    """Generate a heatmap for the correlation matrix of numeric columns."""
-    correlation_matrix = df.corr()
-    plt.figure(figsize=(12, 8))
-    sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', fmt='.2f', linewidths=0.5)
-    plt.title("Correlation Heatmap")
-    st.pyplot(plt)
-
 def plot_count_chart(df, column):
     plt.figure(figsize=(10, 6))
     sns.countplot(data=df, x=column)
     st.pyplot(plt)
+
 
 def plot_scatter_chart(df, column_x, column_y):
     plt.figure(figsize=(10, 6))
     sns.scatterplot(data=df, x=column_x, y=column_y)
     st.pyplot(plt)
 
+
 def main():
     st.title('Metadata Insights')
-    
+
     tables = get_table_names()
     selected_table = st.selectbox('Select a table', tables)
     df = load_table_data(selected_table)
@@ -50,7 +44,7 @@ def main():
         st.dataframe(df)
         
         st.subheader("Visualize Data")
-        
+
         tab1, tab2, tab3 = st.tabs(["Count Plot", "Scatter Plot", "Heatmap"])
 
         with tab1:
@@ -65,10 +59,6 @@ def main():
 
             if column_x and column_y:
                 plot_scatter_chart(df, column_x, column_y)
-
-        with tab3:
-            st.subheader("Correlation Heatmap")
-            plot_heatmap(df)
 
 if __name__ == "__main__":
     main()
